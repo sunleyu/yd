@@ -1,5 +1,9 @@
 <template>
-  <div class="container"></div>
+  <div class="container">
+    <van-skeleton title :row="3" />
+    <van-skeleton title :row="3" />
+    <van-skeleton title :row="3" />
+  </div>
 </template>
 
 <script>

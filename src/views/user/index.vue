@@ -1,5 +1,7 @@
 <template>
-  <div class="container"></div>
+  <div class="container">
+    user
+  </div>
 </template>
 
 <script>
