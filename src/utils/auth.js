@@ -4,6 +4,7 @@
 const USER_KEY = 'hm-toutiao-m-84-user'
 
 // 其实是拿用户信息 包括token  获取token
+
 // 指定成员导出
 export const getUser = () => {
   // 使用localStorage可以关闭浏览器后不清除token  拿出的的是字符串 需要转成对象
