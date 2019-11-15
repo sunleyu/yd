@@ -1,6 +1,6 @@
 // - 最大安全整数处理
 // - token请求头携带
-import store from './store'
+import store from '@/store'
 
 // - 响应数据  获取有效数据 处理
 
