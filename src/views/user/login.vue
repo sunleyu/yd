@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import { login } from '@/api/user'
+import { login } from '@/api/api'
 import { mapMutations } from 'vuex'
 export default {
   name: 'login',
@@ -68,7 +68,7 @@ export default {
     async checkLogin () {
       this.checkMobile()
       this.checkCode()
-      if (this.errMsg.mobile && this.errMsg.code) {
+      if (this.errMsg.mobile || this.errMsg.code) {
         return false
       }
 
@@ -84,9 +84,9 @@ export default {
       } catch (e) {
         this.$toast.fail('手机号或验证码错误')
       }
-    }
-  },
-  ...mapMutations(['setUser'])
+    },
+    ...mapMutations(['setUser'])
+  }
 }
 </script>
 
