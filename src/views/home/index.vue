@@ -4,9 +4,11 @@
     <van-tabs swipeable>
       <van-tab :key="index" v-for="index in 8" :title="'标签 ' + index">
         <div class="scroll-wrapper">
+          <van-pull-refresh v-model="downLoading" @refresh="onRefresh" :success-text="refreshSuccessText">
           <van-list v-model="upLoading" :finished="finished" finished-text="没有更多了" @load="onLoad">
             <van-cell v-for="item in articles" :key="item">{{item}}</van-cell>
           </van-list>
+          </van-pull-refresh>
         </div>
       </van-tab>
     </van-tabs>
@@ -26,7 +28,11 @@ export default {
       // 是否全部加载完成
       finished: false,
       // 文章列表
-      articles: []
+      articles: [],
+      // 是否正在下拉刷新中
+      downLoading: false,
+      // 刷新成功的文案
+      refreshSuccessText: null
     }
   },
   methods: {
@@ -40,7 +46,7 @@ export default {
         // 1-10  11-20  21-30 ...
         for (let i = this.articles.length + 1; i < this.articles.length + 11; i++) {
           data.push(i)
-          console.log(i)
+          // console.log(i)
         }
         // 获取文章列表ok
         this.articles.push(...data)
@@ -49,6 +55,30 @@ export default {
         // 是否所有数据已经加载完毕 （模拟一下，数据超过50就加载完毕）
         if (this.articles.length >= 50) {
           this.finished = true
+        }
+      }, 1000)
+    },
+    onRefresh () {
+      // 下拉刷新
+      // onRefresh 在下拉后 松手后 触发的函数 （获取数据，替换，进行列表渲染）
+      // 获取数据 (获取到了数据，获取不到数据--->提示“暂无更新”,不需要替换列表)
+      window.setTimeout(() => {
+        // 获取数据成功
+        const data = [1, 2, 3, 4, 5, 6]
+        // const data = []
+        // 结束下拉刷新效果
+        this.downLoading = false
+        if (data.length) {
+          this.articles = data
+          // 加载有数据的文案
+          this.refreshSuccessText = '更新成功'
+          // 防止看到 没有更多了 信息 （重新刷新列表，下一页应该是有数据的）
+          this.finished = false
+          // 防止数据不够一屏 再来一次上拉加载数据 onLoad
+          this.onLoad()
+        } else {
+          // 加载没有数据的文案
+          this.refreshSuccessText = '暂无更新'
         }
       }, 1000)
     }
